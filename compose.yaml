@@ -2,13 +2,16 @@ services:
   mysql:
     image: 'mysql:latest'
     environment:
-      - 'MYSQL_DATABASE=mydatabase'
-      - 'MYSQL_PASSWORD=secret'
-      - 'MYSQL_ROOT_PASSWORD=verysecret'
-      - 'MYSQL_USER=myuser'
+      - 'MYSQL_DATABASE=${MYSQL_DATABASE}'
+      - 'MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}'
+      - 'MYSQL_USER=${MYSQL_USER}'
+      - 'MYSQL_PASSWORD=${MYSQL_PASSWORD}'
     ports:
       - '3306'
   redis:
     image: 'redis:latest'
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    environment:
+      - 'REDIS_PASSWORD=${REDIS_PASSWORD}'
     ports:
       - '6379'
