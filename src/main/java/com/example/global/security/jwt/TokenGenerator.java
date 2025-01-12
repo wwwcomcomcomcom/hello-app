@@ -1,6 +1,6 @@
 package com.example.global.security.jwt;
 
-import com.example.domain.user.dto.LoginResponseDto;
+import com.example.domain.auth.dto.LoginResponseDto;
 import com.example.global.security.jwt.properties.JwtEnvironment;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

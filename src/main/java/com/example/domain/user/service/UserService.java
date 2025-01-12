@@ -2,11 +2,8 @@ package com.example.domain.user.service;
 
 import com.example.domain.post.repository.PostRepository;
 import com.example.domain.user.dto.CreateUserDto;
-import com.example.domain.user.dto.LoginRequestDto;
-import com.example.domain.user.dto.LoginResponseDto;
 import com.example.domain.user.entity.User;
 import com.example.domain.user.repository.UserRepository;
-import com.example.global.security.jwt.TokenGenerator;
 import com.example.global.util.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +17,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TokenGenerator tokenGenerator;
     private final UserUtil userUtil;
 
     public void createUser(CreateUserDto createUserDto) {
@@ -32,16 +28,6 @@ public class UserService {
                 )
                 .build();
         userRepository.save(user);
-    }
-
-    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        User user = userRepository.findUserByName(loginRequestDto.getUsername())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found"));
-
-        if(!passwordEncoder.matches(loginRequestDto.getPassword(),user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is incorrect");
-        }
-        return tokenGenerator.generateToken(String.valueOf(user.getId()));
     }
 
     public void deleteUser() {
