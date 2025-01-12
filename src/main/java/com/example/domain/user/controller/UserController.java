@@ -7,10 +7,7 @@ import com.example.domain.user.entity.User;
 import com.example.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
 
@@ -32,5 +29,12 @@ public class UserController {
         return ResponseEntity.ok()
                 .header("Authorization", "Bearer " + response.getAccessToken())
                 .body(response);
+    }
+
+    /** delete current logged in user*/
+    @DeleteMapping
+    public ResponseEntity<String> deleteUser() {
+        userService.deleteUser();
+        return ResponseEntity.ok("User deleted successfully");
     }
 }
