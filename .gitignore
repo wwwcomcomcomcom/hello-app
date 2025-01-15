@@ -1,5 +1,5 @@
 .env
-.env-prod
+prod.env
 HELP.md
 .gradle
 build/
