@@ -10,8 +10,8 @@ file_exists_behavior: OVERWRITE
 permissions:
   - object: /home/ubuntu
     pattern: '**'
-    owner: root
-    group: root
+    owner: ubuntu
+    group: ubuntu
 
 hooks:
   AfterInstall:
