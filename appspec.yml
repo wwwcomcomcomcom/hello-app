@@ -4,6 +4,9 @@ files:
   - source: /
     destination: /home/ubuntu
     overwrite: true
+  - source: /.env
+    destination: /home/ubuntu/src/main/resources
+    overwrite: true
 
 file_exists_behavior: OVERWRITE
 
