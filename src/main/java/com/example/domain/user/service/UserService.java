@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +31,15 @@ public class UserService {
 
     public void createUser(CreateUserDto createUserDto) {
         if(isUserExist(createUserDto.getUsername())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists");
+
         User user = User.builder()
-                .name(createUserDto.getUsername())
+                .name(Optional.ofNullable(createUserDto.getUsername()).orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required"
+                )))
                 .password(
-                        passwordEncoder.encode(createUserDto.getPassword())
+                        passwordEncoder.encode(Optional.ofNullable(createUserDto.getPassword()).orElseThrow(
+                                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is required"
+                        )))
                 )
                 .build();
         userRepository.save(user);
